@@ -24,14 +24,57 @@ export const enum IRCodes {
 
 export type IRCode = Enumerize<IRCodes>;
 
-// TODO - Name these fields better?
+// TVii has some different sound effects for US/JP versions
+//Incomplete list
 export const enum SoundEffects {
-	OLV_CANCEL = 'OLV_CANCEL',
-	OLV_OK = 'OLV_OK',
-	OK_SUB = 'OLV_OK_SUB',
+	COMMON_SELECT = 'SE_COMMON_SELECT',
+	COMMON_TOUCH_ON = 'SE_COMMON_TOUCH_ON',
+	COMMON_TOUCH_CANCEL = 'SE_COMMON_TOUCH_CANCEL',
+	COMMON_MOVE_CURSOR = 'SE_COMMON_MOVE_CURSOR',
+	COMMON_TEXTBOX = 'SE_COMMON_TEXTBOX',
+	APPEAR_DETAIL = 'SE_APPEAR_DETAIL',
+	APPEAR_DETAIL_2 = 'SE_APPEAR_DETAIL_2',
+	APPEAR_DETAIL_3 = 'SE_APPEAR_DETAIL_3',
+	SLIDER_CHANGE = 'SE_SLIDER_CHANGE',
+	REMOTE_COMMON = 'SE_REMOTE_COMMON',
+	REMOTE_FINISH = 'SE_REMOTE_FINISH',
+	REMOTE_FINISH1 = 'SE_REMOTE_FINISH1',
+	REMOTE_FINISH2 = 'SE_REMOTE_FINISH2',
+	REMOTE_FINISH3 = 'SE_REMOTE_FINISH3',
+	REMOTE_0 = 'SE_REMOTE_0',
+	REMOTE_1 = 'SE_REMOTE_1',
+	REMOTE_2 = 'SE_REMOTE_2',
+	REMOTE_3 = 'SE_REMOTE_3',
+	REMOTE_4 = 'SE_REMOTE_4',
+	REMOTE_5 = 'SE_REMOTE_5',
+	REMOTE_6 = 'SE_REMOTE_6',
+	REMOTE_7 = 'SE_REMOTE_7',
+	REMOTE_8 = 'SE_REMOTE_8',
+	REMOTE_9 = 'SE_REMOTE_9',
+	REMOTE_10 = 'SE_REMOTE_10',
+	REMOTE_11 = 'SE_REMOTE_11',
+	REMOTE_12 = 'SE_REMOTE_12',
+	NETWORK = 'SE_NETWORK',
+	REMINDER = 'SE_REMINDER',
+	AUTOSCREEN_APPEAR = 'SE_AUTOSCREEN_APPEAR',
+	AUTOSYNC_PRE = 'SE_AUTOSYNC_PRE',
+	DECIDE = 'SE_DECIDE',
+	DECIDE_TOUCH_OFF = 'SE_DECIDE_TOUCH_OFF',
+	DECIDE_SMALL = 'SE_DECIDE_SMALL',
+	DECIDE_SMALL_TOUCH_OFF = 'SE_DECIDE_SMALL_TOUCH_OFF',
+	DECIDE_US = 'SE_A_DECIDE',
+	DECIDE_US_TOUCH_OFF = 'SE_A_DECIDE_TOUCH_OFF',
 };
 
 export type SoundEffect = `${SoundEffects}`;
+
+// TODO - Name these fields better?
+export const enum BackgroundMusic {
+	APP_START = 'SE_APP_START',
+	APP_START_SUB = 'SE_APP_START_SUB',
+};
+
+export type BGM = `${BackgroundMusic}`;
 
 // TODO - Name these fields better?
 export const enum PINCheckResults {
@@ -54,6 +97,20 @@ export const enum MiiFeelings {
 
 export type MiiFeeling = Enumerize<MiiFeelings>;
 
+
+// TODO - Name these fields better?
+export const enum MiiFeelingsAct {
+	DEFAULT = 1, // * This is actually called "normal" internally but I feel like this makes more sense
+	HAPPY = 2,
+	WINK = 3, // * This is actually called "like" internally but I didn't feel like that made sense
+	SURPRISED = 4,
+	FRUSTRATED = 5,
+	PUZZLED = 6,
+	DEFAULT_BODY = 7
+};
+
+export type MiiFeelingAct = Enumerize<MiiFeelingsAct>;
+
 export default interface VinoAPI {
 	/**
 	 * Plays a sound by it's ID
@@ -67,7 +124,7 @@ export default interface VinoAPI {
 	 * @param label - Sounds label.
 	 * @returns Unknown
 	 */
-	soundPlay: (label: SoundEffect) => number;
+	soundPlay: (label: SoundEffect | BGM) => number;
 
 	/**
 	 * Plays a sound by it's label and some number?
@@ -75,7 +132,7 @@ export default interface VinoAPI {
 	 * @param unk - Unknown. Volume?
 	 * @returns Unknown
 	 */
-	soundPlayEx: (label: string, unk: number) => number;
+	soundPlayEx: (label: SoundEffect | BGM, unk: number) => number;
 
 	/**
 	 * Plays a sound by it's label at a certain volume
@@ -83,7 +140,7 @@ export default interface VinoAPI {
 	 * @param volume - Sounds volume
 	 * @returns Unknown
 	 */
-	soundPlayVolume: (label: SoundEffect, volume: number) => number;
+	soundPlayVolume: (label: SoundEffect | BGM, volume: number) => number;
 
 	/**
 	 * Unknown
@@ -309,10 +366,10 @@ export default interface VinoAPI {
 	navi_setAreaOverSearch: (unk: boolean) => void;
 
 	/**
-	 * Unknown
-	 * @param unk - Unknown
+	 * Changes navigation moving method
+	 * @param method - -1 disables navigation, 1 is default
 	 */
-	navi_setMoveMethod: (unk: number) => void;
+	navi_setMoveMethod: (method: number) => void;
 
 	/**
 	 * Disable navigation box movement to any section below
@@ -468,7 +525,7 @@ export default interface VinoAPI {
 	jumpToTitle: (titleID: string, confirm: boolean) => void;
 
 	/**
-	 * Jumps to System Settings on the TV Remote screen
+	 * Opens System Settings on the TV Remote screen
 	 * @param confirm - Show confirmation message if true, jump inmediately if false
 	 */
 	jumpToSettingsTvRemote: (confirm: boolean) => void;
@@ -649,7 +706,7 @@ export default interface VinoAPI {
 
 	/**
 	 * Checks if parental controls are enabled for Miiverse
-	 * @returns 1 if posting is disabled, 2 if posting and viewing is disabled
+	 * @returns -1 if disabled, 1 if posting is disabled, 2 if posting and viewing is disabled
 	 */
 	pc_getMiiverseControlLevel: () => number;
 
