@@ -177,10 +177,10 @@ export default interface VinoAPI {
 	/**
 	 * Plays a sound by it's label and some number?
 	 * @param label - Sounds label. Allowed values not known
-	 * @param volume - How loud a sound will play. Lower number = louder higher number = quiter. Debug JS uses 20, 40, 60, 80, 100, and 127.
+	 * @param unk - Either volume or speed. Debug JS uses 20, 40, 60, 80, 100, and 127.
 	 * @returns Unknown
 	 */
-	soundPlayEx: (label: SoundEffect | BGM, volume: number) => number;
+	soundPlayEx: (label: SoundEffect | BGM, unk: number) => number;
 
 	/**
 	 * Plays a sound by it's label at a certain volume
