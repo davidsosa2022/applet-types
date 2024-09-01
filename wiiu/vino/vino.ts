@@ -25,7 +25,7 @@ export const enum IRCodes {
 export type IRCode = Enumerize<IRCodes>;
 
 // TVii has some different sound effects for US/JP versions
-//Incomplete list
+// Mostly (if not fully) complete list
 export const enum SoundEffects {
 	COMMON_SELECT = 'SE_COMMON_SELECT',
 	COMMON_TOUCH_ON = 'SE_COMMON_TOUCH_ON',
@@ -55,6 +55,63 @@ export const enum SoundEffects {
 	TOP_TOUCH_OFF = 'SE_TOP_TOUCH_OFF',
 	FAVORITE = 'SE_FAVORITE',
 	FAVORITE_TOUCH_OFF = 'SE_FAVORITE_TOUCH_OFF',
+	NO_FAVORITE = 'SE_NO_FAVORITE',
+	NO_FAVORITE_TOUCH_OFF = 'SE_NO_FAVORITE_TOUCH_OFF',
+	LIST_SSCROLL_SELECT = 'SE_LIST_SSCROLL_SELECT',
+	LIST_SSCROLL = 'SE_LIST_SSCROLL',
+	LIST_SSCROLL_KEY = 'SE_LIST_SSCROLL_KEY',
+	LIST_SSCROLL_END = 'SE_LIST_SSCROLL_END',
+	LIST_TSCROLL_SELECT = 'SE_LIST_TSCROLL_SELECT',
+	LIST_TSCROLL = 'SE_LIST_TSCROLL',
+	LIST_TSCROLL_KEY = 'SE_LIST_TSCROLL_KEY',
+	LIST_TSCROLL_END = 'SE_LIST_TSCROLL_END',
+	SLIDE_TOUCH = 'SE_SLIDE_TOUCH',
+	SLIDE_SPEED = 'SE_SLIDE_SPEED',
+	SLIDEEND_HIT = 'SE_SLIDEEND_HIT',
+	MOVEPAGE_SELECT = 'SE_MOVEPAGE_SELECT',
+	MOVEPAGE_PLAY = 'SE_MOVEPAGE_PLAY',
+	A_DIAL_SCROLL = 'SE_A_DIAL_SCROLL',
+	SLIDE = 'SE_A_DIAL_SCROLL', // * Repeat of A_DIAL_SCROLL as it is also reffered to as SLIDE in the debug HTMLs.
+	CHANNEL = 'SE_CHANNEL',
+	CHANNEL_TEST = 'SE_CHANNEL_TEST',
+	DELETE_SMALL = 'SE_DELETE_SMALL',
+	FACE_BTN = 'SE_FACE_BTN',
+	POST_BTN = 'SE_POST_BTN',
+	FACE = 'SE_FACE',
+	POST = 'SE_POST',
+	CHANNEL_TOUCH_OFF = 'SE_CHANNEL_TOUCH_OFF',
+	CHANNEL_TEST_TOUCH_OFF = 'SE_CHANNEL_TOUCH_OFF',
+	DELETE_SMALL_TOUCH_OFF = 'SE_DELETE_SMALL_TOUCH_OFF',
+	FACE_BTN_TOUCH_OFF = 'SE_FACE_BTN_TOUCH_OFF',
+	FACE_POST_BTN_OFF = 'SE_POST_BTN_TOUCH_OFF',
+	FACE_TOUCH_OFF = 'SE_FACE_TOUCH_OFF',
+	POST_TOUCH_OFF = 'SE_POST_TOUCH_OFF',
+	APPEAR_DETAIL_2 = 'SE_APPEAR_DETAIL_2',
+	APPEAR_DETAIL_3 = 'SE_APPEAR_DETAIL_3',
+	SLIDER_CHANGE = 'SE_SLIDER_CHANGE',
+	REMOTE_COMMON = 'SE_REMOTE_COMMON',
+	REMOTE_FINISH = 'SE_REMOTE_FINISH',
+	REMOTE_FINISH1 = 'SE_REMOTE_FINISH1',
+	REMOTE_FINISH2 = 'SE_REMOTE_FINISH2',
+	REMOTE_FINISH3 = 'SE_REMOTE_FINISH3',
+	REMOTE_0 = 'SE_REMOTE_0',
+	REMOTE_1 = 'SE_REMOTE_1',
+	REMOTE_2 = 'SE_REMOTE_2',
+	REMOTE_3 = 'SE_REMOTE_3',
+	REMOTE_4 = 'SE_REMOTE_4',
+	REMOTE_5 = 'SE_REMOTE_5',
+	REMOTE_6 = 'SE_REMOTE_6',
+	REMOTE_7 = 'SE_REMOTE_7',
+	REMOTE_8 = 'SE_REMOTE_8',
+	REMOTE_9 = 'SE_REMOTE_9',
+	REMOTE_10 = 'SE_REMOTE_10',
+	REMOTE_11 = 'SE_REMOTE_11',
+	REMOTE_12 = 'SE_REMOTE_12',
+	NETWORK = 'SE_NETWORK',
+	REMINDER = 'SE_REMINDER',
+	AUTOSCREEN_APPEAR = 'SE_AUTOSCREEN_APPEAR',
+	AUTOSYNC_PRE = 'SE_AUTOSYNC_PRE',
+	DECIDE_US_TOUCH_OFF = 'SE_A_DECIDE_TOUCH_OFF',
 };
 
 export type SoundEffect = `${SoundEffects}`;
@@ -105,7 +162,7 @@ export type MiiFeelingAct = Enumerize<MiiFeelingsAct>;
 export default interface VinoAPI {
 	/**
 	 * Plays a sound by it's ID
-	 * @param soundID - Sounds ID. Allowed values not known
+	 * @param soundID - Sounds ID. 0-49?
 	 * @returns Unknown
 	 */
 	soundPlayId: (soundID: number) => number;
@@ -120,10 +177,10 @@ export default interface VinoAPI {
 	/**
 	 * Plays a sound by it's label and some number?
 	 * @param label - Sounds label. Allowed values not known
-	 * @param unk - Unknown. Volume?
+	 * @param volume - How loud a sound will play. Lower number = louder higher number = quiter. Debug JS uses 20, 40, 60, 80, 100, and 127.
 	 * @returns Unknown
 	 */
-	soundPlayEx: (label: SoundEffect | BGM, unk: number) => number;
+	soundPlayEx: (label: SoundEffect | BGM, volume: number) => number;
 
 	/**
 	 * Plays a sound by it's label at a certain volume
